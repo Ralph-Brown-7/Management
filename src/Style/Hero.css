@@ -1,0 +1,126 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.border{
+    background-color: #060C19;
+    margin-top: 70px;
+    margin-left: 110px;
+    border: none;
+    width:780px;
+}
+.get{
+    color: #5674B3;
+}
+.hemp{
+    background-color: #060C19;
+    border: solid #091429;
+    color: #5674B3;
+}
+.search{
+    background-color: #6C63FF;
+}
+.here{
+    background-color: #0C1324;
+    font-size: 10px;
+    margin-top: 20px;
+}
+.dis{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.orm{
+    color: #5674B3;
+}
+.done{
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 15px;
+    color: white;
+}
+.pear{
+    line-height:0.5;
+}
+.green{
+    background-color: #0C1324;
+}
+.round{
+    margin-right: 10px;
+    border: none;
+    border-radius: 15px;
+    background-color: #0C1324;
+    width: 300px;
+    padding: 10px 20px 0;
+}
+.gradient{
+    background: linear-gradient(
+    to left,
+    #ffffff 30%,
+    #0EB5FE 50%,
+    #082A98 100%
+);
+    display: inline-flex;
+    width: 300px;
+    height: 10px;
+    border-radius: 3px;
+}
+.fear{
+    font-size: 12px;
+}
+.new{
+    font-size: 18px;
+}
+.bomb{
+    background-color: #060C19;
+}
+.deal{
+    background: linear-gradient(to left, #FFAB6B, #F67717);
+    padding: 4px 7px;
+    border: none;
+    border-radius: 3px;
+}
+.height{
+    line-height: 0.2;
+}
+.name{
+    color: #5674B3;
+}
+.bulb{
+    background: linear-gradient(104deg, #051B48,  #020A19);
+    width: 370px;
+    padding: 70px 20px 0;
+    border: none;
+    border-radius: 10px;
+    margin: 0 auto;
+}
+.level{
+    background-color: #030E24;
+    width: 400px;
+    border: none;
+    border-radius: 13px;
+    padding: 17px 13px 15px;
+    
+}
+.yeah{
+    font-family: "poppins", sans-serif;
+    font-weight: 400;
+    font-size: normal;
+}
+.four{
+    padding:"20px 40px,";
+    background-color:"#051B48"; 
+    font-size:"14px"; 
+    margin-left:"250px"
+}
+.panda{
+    background-color: #051B48;
+    font-size: 15px;
+}
+.hurt{
+    font-family: "poppins", sans-serif;
+    font-size: normal;
+    font-weight: 400;
+}
