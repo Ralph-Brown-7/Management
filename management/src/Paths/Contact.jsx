@@ -20,17 +20,17 @@ const Contact = () => {
                                 <div>
                                     <label htmlFor="Full Name" className='done'>Full Name</label>
                                     <br />
-                                    <input  className='rounded-3 mb-3 ps-3' type="Name" name='Full Name' id='Full Name' placeholder='Full Name' style={{width:"370px", background:"#060C19", height:"40px"}}/>
+                                    <input  className='rounded-3 mb-3 ps-3' type="Name" name='Full Name' id='Full Name' placeholder='Full Name' style={{width:"370px", background:"#060C19", height:"40px", color:"white"}}/>
                                 </div>
                                 <div>
                                     <label htmlFor="email" className='done'>Email</label>
                                     <br />
-                                    <input type="email" className='rounded-3  mb-3 ps-3' name='email' id='email' placeholder='Your Email'style={{width:"370px", background:"#060C19", height:"40px"}}/>
+                                    <input type="email" className='rounded-3  mb-3 ps-3' name='email' id='email' placeholder='Your Email'style={{width:"370px", background:"#060C19", height:"40px", color:"white"}}/>
                                 </div>
                                 <div>
                                     <label htmlFor="Subject" className='done'>Subject</label>
                                     <br />
-                                    <input type="text" name='Subject' className='rounded-3 mb-5 ps-3' id='Subject' placeholder='Write Your Message...' style={{width:"370px", background:"#060C19", height:"150px", paddingBottom:"90px"}}/>
+                                    <input type="text" name='Subject' className='rounded-3 mb-5 ps-3' id='Subject' placeholder='Write Your Message...' style={{width:"370px", background:"#060C19", height:"150px", paddingBottom:"90px", color:"white"}}/>
                                 </div>
                                 <button className='py-3 px-5 rounded-4 ms-5' style={{fontWeight:"600", background:"#8662FF"}}>Send Message</button>
                             </form>

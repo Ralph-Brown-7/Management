@@ -8,6 +8,11 @@
     font-weight: 500;
     font-style: normal;
 }
+.sizes{
+    font-family: "poppins", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+}
 .bear{
     font-family: "poppins" sans-serif;
     font-weight: 600;
@@ -18,6 +23,9 @@
 .pink:hover {
     text-decoration: 2px underline #5674B3 !important;
 }
-.pump:fucos{
-    background-color:#060C19 ;
+.near:hover{
+    background-color: #0d6efd !important;
+}
+.nearer:hover{
+    background-color: #051B48 !important;
 }

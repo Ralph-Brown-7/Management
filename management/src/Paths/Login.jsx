@@ -15,7 +15,7 @@ const Login = () => {
               <div className='mb-4'>
                 <label htmlFor="email" className='done mb-1'>Email dddress</label>
                 <br />
-                <input type="email" name='email' id='email'placeholder='Enter your email'className='rounded-3 px-3 size text-white pump' style={{width:"370px", background:"#060C19", height:"40px"}}/>
+                <input type="email" name='email' id='email'placeholder='Enter your email'className='rounded-3 px-3 size text-white' style={{width:"370px", background:"#060C19", height:"40px"}}/>
               </div>
               <div className='mb-4'>
                 <label htmlFor="password" className='done mb-1'>Password</label>
