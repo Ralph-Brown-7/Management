@@ -1,0 +1,173 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.border{
+    background-color: #060C19;
+    margin-top: 70px;
+    margin-left: 110px;
+    border: none;
+    width:780px;
+}
+.get{
+    color: #5674B3;
+}
+.hemp{
+    background-color: #060C19;
+    border: solid #091429;
+    color: #5674B3;
+}
+.search{
+    background-color: #6C63FF;
+}
+.here{
+    background-color: #0C1324;
+    font-size: 10px;
+    margin-top: 20px;
+}
+.dis{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.orm{
+    color: #5674B3;
+}
+.yeah > div.d-flex.justify-content-between.m-auto > p.orm{
+    margin-top: 5rem;
+    margin-right: 9.5rem;
+    margin-bottom: 2rem;
+    margin-left: auto;
+    align-self: flex-start;
+    padding-right: 1rem;
+}
+.done{
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 15px;
+    color: white;
+}
+h1.done{
+    font-size: 40px;
+    margin-top: 3rem;
+    margin-left: 4.5rem;
+    margin-bottom: 2rem;
+}
+.pear{
+    line-height:0.5;
+}
+.green{
+    background-color: #0C1324;
+}
+.round{
+    margin-right: 10px;
+    border: none;
+    border-radius: 15px;
+    background-color: #0C1324;
+    width: 300px;
+    padding: 10px 20px 0;
+}
+.gradient{
+    background: linear-gradient(
+    to left,
+    #ffffff 30%,
+    #0EB5FE 50%,
+    #082A98 100%
+);
+    display: inline-flex;
+    width: 300px;
+    height: 10px;
+    border-radius: 3px;
+}
+.fear{
+    font-size: 12px;
+}
+.new{
+    font-size: 18px;
+}
+.bomb{
+    background-color: #060C19;
+}
+.deal{
+    background: linear-gradient(to left, #FFAB6B, #F67717);
+    padding: 4px 7px;
+    border: none;
+    border-radius: 3px;
+}
+.height{
+    line-height: 0.2;
+}
+.name{  
+    color: #5674B3;
+}
+.bulb{
+    background: linear-gradient(104deg, #051B48,  #020A19);
+    width: 370px;
+    padding: 70px 20px 0;
+    border: none;
+    border-radius: 10px;
+    margin: 0 auto;
+}
+.level{
+    background-color: #030E24;
+    width: 400px;
+    border: none;
+    border-radius: 13px;
+    padding: 17px 13px 15px;
+    margin-bottom: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.level:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+    z-index: 10;
+}
+.yeah{
+    font-family: "poppins", sans-serif;
+    font-weight: 400;
+    font-size: normal;
+}
+.yeah .row > [class*="col-"] {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+.yeah > div.d-flex.justify-content-between.m-auto{
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0;
+    width: 100%;
+    max-width: 100% !important;
+}
+.four{
+    padding:20px 40px;
+    background-color:"#051B48"; 
+    font-size:14px; 
+    margin-left:250px
+}
+.panda{
+    background: linear-gradient(to right, #1798F8, #05CEFF);
+    font-size: 15px;
+    color: white !important;
+    border: none;
+    border-radius: 10px;
+    transition: opacity 0.3s ease, transform 0.2s ease;
+}
+.panda:hover{
+    opacity: 0.9;
+    transform: scale(1.02);
+}
+.hurt{
+    font-family: "poppins", sans-serif;
+    font-size: normal;
+    font-weight: 400;
+}
+
+@media (max-width: 1000px){
+
+}

@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-bg: #0f172a;
+  --neon-cyan: #00f2ff;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Fix for Tailwind v4 'collapse' utility clashing with Bootstrap's 'collapse' class */
+.navbar-collapse.collapse {
+  visibility: visible !important;
+}
