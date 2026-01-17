@@ -1,0 +1,23 @@
+# Ignore Python Virtual Environment
+Backend/venv/
+venv/
+.venv/
+env/
+
+# Ignore Python Cache
+**/__pycache__/
+**/*.pyc
+
+# Ignore Databases
+Backend/*.db
+Backend/*.sqlite3
+
+# Ignore Node.js (Frontend)
+management/node_modules/
+node_modules/
+management/dist/
+
+# Ignore Environment Secrets
+.env
+Backend/.env
+management/.env
