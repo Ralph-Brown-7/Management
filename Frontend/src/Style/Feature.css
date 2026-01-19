@@ -1,0 +1,31 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.size{
+    font-family: "poppins", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+.sizes{
+    font-family: "poppins", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+}
+.bear{
+    font-family: "poppins" sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 20px;
+    color: white;
+}
+.pink:hover {
+    text-decoration: 2px underline #5674B3 !important;
+}
+.near:hover{
+    background-color: #0d6efd !important;
+}
+.nearer:hover{
+    background-color: #051B48 !important;
+}

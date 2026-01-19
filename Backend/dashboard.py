@@ -4,6 +4,10 @@ from typing import List, Optional
 from datetime import date, timedelta
 import models, schemas, auth
 from database import get_db
+<<<<<<< HEAD
+from sqlalchemy import func
+=======
+>>>>>>> 54d6d2312537ffaf2fb867d377048567bdb812d0
 
 router = APIRouter(tags=["Dashboard"])
 
@@ -159,3 +163,140 @@ def update_progress(course_id: int, progress: int, last_lesson: Optional[str] = 
     
     db.commit()
     return {"message": "Progress updated", "progress": enrollment.progress, "status": enrollment.status, "last_lesson": enrollment.last_lesson}
+<<<<<<< HEAD
+
+@router.get("/admin/dashboard", response_model=schemas.AdminDashboardData)
+def get_admin_dashboard_data(current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    if current_user.role not in ["admin", "instructor"]:
+        raise HTTPException(status_code=403, detail="Not authorized")
+
+    # Filter for Instructor
+    course_filter = {}
+    if current_user.role == "instructor":
+        # Match by exact name based on seed data
+        course_filter = {"instructor": current_user.full_name}
+
+    # Helper to build queries
+    def apply_filter(query, model):
+        if current_user.role == "instructor":
+            return query.filter(model.instructor == current_user.full_name)
+        return query
+
+    # Total Courses
+    courses_query = db.query(models.Course)
+    if current_user.role == "instructor":
+        courses_query = courses_query.filter(models.Course.instructor == current_user.full_name)
+    total_courses = courses_query.count()
+
+    # Total Students (Unique students enrolled in my courses)
+    # This is a bit complex with current models, simplifying to count of enrollments for my courses
+    # Join Enrollment -> Course
+    enrollments_query = db.query(models.Enrollment).join(models.Course)
+    if current_user.role == "instructor":
+        enrollments_query = enrollments_query.filter(models.Course.instructor == current_user.full_name)
+    
+    total_enrollments_count = enrollments_query.count() # Treat as "students" for dashboard
+
+    if current_user.role == "admin":
+         # Admin sees total unique students in platform
+         total_students = db.query(models.User).filter(models.User.role == "student").count()
+    else:
+         total_students = total_enrollments_count # Approximation for instructor
+
+    
+    # Revenue
+    enrollments = enrollments_query.all()
+    revenue = 0
+    for enr in enrollments:
+        revenue += enr.course.price if enr.course.price else 0
+
+    # Recent Enrollments
+    recent_enrollments_query = db.query(models.Enrollment).join(models.Course)
+    if current_user.role == "instructor":
+         recent_enrollments_query = recent_enrollments_query.filter(models.Course.instructor == current_user.full_name)
+    
+    recent_req = recent_enrollments_query.order_by(models.Enrollment.id.desc()).limit(5).all()
+    
+    recent_data = []
+    for enr in recent_req:
+        recent_data.append({
+            "course_title": enr.course.title,
+            "student_name": enr.user.full_name,
+            "date": "2026-01-18", # Placeholder
+            "status": enr.status,
+            "price": enr.course.price if enr.course.price else 0
+        })
+
+    # Course Performance
+    # Filter courses then count enrollments
+    courses = courses_query.all()
+    
+    course_performance = []
+    # Manual aggregation for simplicity since filtering logic is mixed
+    for course in courses:
+        student_count = db.query(models.Enrollment).filter(models.Enrollment.course_id == course.id).count()
+        course_performance.append({
+            "title": course.title,
+            "students": student_count,
+            "earnings": student_count * (course.price or 0),
+            "image": course.image,
+            "status": "active"
+        })
+    
+    # Sort top 5
+    course_performance.sort(key=lambda x: x['students'], reverse=True)
+    course_performance = course_performance[:5]
+
+    # Mock Revenue Analytics (12 months)
+    import random
+    revenue_analytics = [random.randint(1000, 5000) for _ in range(12)]
+
+    # Students List (from enrollments)
+    students_list = []
+    # Reuse enrollments_query which filters for instructor's courses
+    # Need to load User data. Already joined? No, joined Course.
+    # New query to join user properly or iterate existing result if efficient.
+    # enrollments_query already joins Course. Let's make sure we access user.
+    # query(models.Enrollment).join(models.Course)
+    # We should eager load user to be safe: .options(joinedload(models.Enrollment.user)) if eager loading was set up, 
+    # but for now standard lazy load should work or simple join.
+    
+    # Let's run a specific query for the students list to be clean
+    student_enrollments = enrollments_query.all() # This gets all enrollments for instructor
+    
+    for enr in student_enrollments:
+        # Determine status based on progress/activity (mock logic heavily used in frontend too)
+        # Using basic logic here
+        student_status = "Active"
+        if enr.progress >= 100: student_status = "Completed"
+        elif enr.progress < 20: student_status = "Lazy"  # Matches user terminology
+        elif enr.progress < 50: student_status = "At Risk"
+        
+        students_list.append({
+            "id": enr.user.id,
+            "name": enr.user.full_name,
+            "course": enr.course.title,
+            "progress": enr.progress,
+            "status": student_status,
+            "xp": enr.user.xp or 0,
+            "last_active": "Today", # Placeholder
+            "avatar": None # Placeholder
+        })
+        
+    # Calculate Total XP
+    total_xp = sum(s['xp'] for s in students_list)
+
+    return {
+        "total_courses": total_courses,
+        "total_students": total_students,
+        "revenue": revenue,
+        "average_rating": 4.8, 
+        "active_courses_count": total_courses, 
+        "recent_enrollments": recent_data,
+        "revenue_analytics": revenue_analytics,
+        "course_performance": course_performance,
+        "students": students_list,
+        "total_xp": total_xp
+    }
+=======
+>>>>>>> 54d6d2312537ffaf2fb867d377048567bdb812d0

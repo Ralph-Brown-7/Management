@@ -20,7 +20,11 @@ SECRET_KEY = "YOUR_SUPER_SECRET_KEY_HERE"  # CHANGE THIS!
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
+<<<<<<< HEAD
+pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
+=======
 pwd_context = CryptContext(schemes=["sha256_crypt"], deprecated="auto")
+>>>>>>> 54d6d2312537ffaf2fb867d377048567bdb812d0
 
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
@@ -66,7 +70,23 @@ def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
 @router.post("/login", response_model=schemas.Token)
 def login(user_credentials: schemas.UserLogin, db: Session = Depends(get_db)):
+<<<<<<< HEAD
+    with open("auth_debug.log", "a") as f:
+        f.write(f"\n--- Login Attempt for {user_credentials.email} ---\n")
+        
+        user = db.query(models.User).filter(models.User.email == user_credentials.email).first()
+        
+        if user:
+            f.write(f"User found: {user.email}, Role: {user.role}\n")
+            f.write(f"Stored Hash: {user.password_hash}\n")
+            verify_result = verify_password(user_credentials.password, user.password_hash)
+            f.write(f"Password Verify Result: {verify_result}\n")
+        else:
+            f.write("User NOT found in database\n")
+
+=======
     user = db.query(models.User).filter(models.User.email == user_credentials.email).first()
+>>>>>>> 54d6d2312537ffaf2fb867d377048567bdb812d0
     if not user or not verify_password(user_credentials.password, user.password_hash):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

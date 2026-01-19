@@ -27,6 +27,12 @@ class Course(Base):
     image = Column(String) # URL to cloud/local image
     instructor = Column(String)
     level = Column(String) # Beginner, Intermediate, Advanced
+<<<<<<< HEAD
+    price = Column(Integer)
+    category = Column(String)
+    duration = Column(String)
+=======
+>>>>>>> 54d6d2312537ffaf2fb867d377048567bdb812d0
 
 class Enrollment(Base):
     __tablename__ = "enrollments"
