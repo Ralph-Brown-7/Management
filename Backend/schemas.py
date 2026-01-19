@@ -1,9 +1,5 @@
 from pydantic import BaseModel, EmailStr
-<<<<<<< HEAD
 from typing import Optional, List
-=======
-from typing import Optional
->>>>>>> 54d6d2312537ffaf2fb867d377048567bdb812d0
 
 class UserBase(BaseModel):
     email: EmailStr
@@ -35,12 +31,9 @@ class CourseBase(BaseModel):
     image: str
     instructor: str
     level: str
-<<<<<<< HEAD
     price: int
     category: str
     duration: str
-=======
->>>>>>> 54d6d2312537ffaf2fb867d377048567bdb812d0
 
 class CourseCreate(CourseBase):
     pass
@@ -70,7 +63,6 @@ class DashboardData(BaseModel):
     courses_in_progress: int
     certificates_earned: int
     average_score: int
-<<<<<<< HEAD
     enrollments: List[Enrollment]
     recent_activity: List[str] # Placeholder for now
 
@@ -109,7 +101,3 @@ class AdminDashboardData(BaseModel):
     course_performance: List[AdminCoursePerformance]
     students: List[StudentDisplay]
     total_xp: int # Added XP aggregation
-=======
-    enrollments: list[Enrollment]
-    recent_activity: list[str] # Placeholder for now
->>>>>>> 54d6d2312537ffaf2fb867d377048567bdb812d0

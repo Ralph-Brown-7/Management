@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Date
+from sqlalchemy import Column, Integer, String, ForeignKey, Date, DateTime
+from datetime import datetime
 from sqlalchemy.orm import relationship
 from database import Base
 
@@ -27,12 +28,9 @@ class Course(Base):
     image = Column(String) # URL to cloud/local image
     instructor = Column(String)
     level = Column(String) # Beginner, Intermediate, Advanced
-<<<<<<< HEAD
     price = Column(Integer)
     category = Column(String)
     duration = Column(String)
-=======
->>>>>>> 54d6d2312537ffaf2fb867d377048567bdb812d0
 
 class Enrollment(Base):
     __tablename__ = "enrollments"
@@ -47,3 +45,12 @@ class Enrollment(Base):
     user = relationship("User", back_populates="enrollments")
     course = relationship("Course")
 
+class ActivityLog(Base):
+    __tablename__ = "activity_logs"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    user_email = Column(String, index=True)
+    role = Column(String)  # student, instructor, admin
+    action = Column(String)  # System Login, Registration, Course Update, etc.
+    status = Column(String)  # Success, Failed
+    timestamp = Column(DateTime, default=datetime.utcnow)

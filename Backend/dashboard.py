@@ -4,10 +4,7 @@ from typing import List, Optional
 from datetime import date, timedelta
 import models, schemas, auth
 from database import get_db
-<<<<<<< HEAD
 from sqlalchemy import func
-=======
->>>>>>> 54d6d2312537ffaf2fb867d377048567bdb812d0
 
 router = APIRouter(tags=["Dashboard"])
 
@@ -163,7 +160,6 @@ def update_progress(course_id: int, progress: int, last_lesson: Optional[str] = 
     
     db.commit()
     return {"message": "Progress updated", "progress": enrollment.progress, "status": enrollment.status, "last_lesson": enrollment.last_lesson}
-<<<<<<< HEAD
 
 @router.get("/admin/dashboard", response_model=schemas.AdminDashboardData)
 def get_admin_dashboard_data(current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
@@ -298,5 +294,43 @@ def get_admin_dashboard_data(current_user: models.User = Depends(get_current_use
         "students": students_list,
         "total_xp": total_xp
     }
-=======
->>>>>>> 54d6d2312537ffaf2fb867d377048567bdb812d0
+
+@router.get("/activity-logs")
+def get_activity_logs(current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Get recent activity logs for admin dashboard"""
+    if current_user.role not in ["admin", "instructor"]:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    # Get the 10 most recent activity logs
+    logs = db.query(models.ActivityLog).order_by(models.ActivityLog.timestamp.desc()).limit(10).all()
+    
+    from datetime import datetime
+    
+    def get_relative_time(timestamp):
+        """Convert timestamp to relative time string"""
+        now = datetime.utcnow()
+        diff = now - timestamp
+        
+        if diff.total_seconds() < 60:
+            return "Just now"
+        elif diff.total_seconds() < 3600:
+            minutes = int(diff.total_seconds() / 60)
+            return f"{minutes} min{'s' if minutes > 1 else ''} ago"
+        elif diff.total_seconds() < 86400:
+            hours = int(diff.total_seconds() / 3600)
+            return f"{hours} hour{'s' if hours > 1 else ''} ago"
+        else:
+            days = int(diff.total_seconds() / 86400)
+            return f"{days} day{'s' if days > 1 else ''} ago"
+    
+    result = []
+    for log in logs:
+        result.append({
+            "user_email": log.user_email,
+            "role": log.role,
+            "action": log.action,
+            "status": log.status,
+            "time": get_relative_time(log.timestamp)
+        })
+    
+    return result

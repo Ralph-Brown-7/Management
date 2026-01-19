@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 const SuperAdminDashboard = () => {
     const navigate = useNavigate();
     const [stats, setStats] = useState(null);
+    const [activityLogs, setActivityLogs] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -28,11 +29,18 @@ const SuperAdminDashboard = () => {
                  return;
              }
              try {
-                // Reusing the same endpoint for now, but in reality this would cover ALL system data
+                // Fetch dashboard stats
                 const response = await axios.get('http://localhost:8000/admin/dashboard', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setStats(response.data);
+                
+                // Fetch activity logs
+                const logsResponse = await axios.get('http://localhost:8000/activity-logs', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setActivityLogs(logsResponse.data);
+                
                 setLoading(false);
              } catch (error) {
                  console.error(error);
@@ -40,6 +48,18 @@ const SuperAdminDashboard = () => {
              }
         };
         fetchStats();
+        
+        // Refresh activity logs every 30 seconds
+        const interval = setInterval(() => {
+            const token = sessionStorage.getItem('access_token');
+            if (token) {
+                axios.get('http://localhost:8000/activity-logs', {
+                    headers: { Authorization: `Bearer ${token}` }
+                }).then(res => setActivityLogs(res.data)).catch(console.error);
+            }
+        }, 30000);
+        
+        return () => clearInterval(interval);
     }, [navigate]);
 
     if (loading) return <div className="vh-100 d-flex justify-content-center align-items-center text-white bg-dark"><Spinner animation="border" /></div>;
@@ -141,27 +161,35 @@ const SuperAdminDashboard = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td className="fw-bold">admin@learnflow.com</td>
-                                <td><Badge bg="dark">Super Admin</Badge></td>
-                                <td>System Login</td>
-                                <td><Badge bg="success" text="light">Success</Badge></td>
-                                <td className="text-secondary">Just now</td>
-                            </tr>
-                            <tr>
-                                <td>instructor@learnflow.com</td>
-                                <td><Badge bg="primary">Instructor</Badge></td>
-                                <td>Course Update</td>
-                                <td><Badge bg="success" text="light">Success</Badge></td>
-                                <td className="text-secondary">2 mins ago</td>
-                            </tr>
-                            <tr>
-                                <td>student@example.com</td>
-                                <td><Badge bg="info">Student</Badge></td>
-                                <td>Failed Login Attempt</td>
-                                <td><Badge bg="danger">Failed</Badge></td>
-                                <td className="text-secondary">15 mins ago</td>
-                            </tr>
+                            {activityLogs.length > 0 ? (
+                                activityLogs.map((log, index) => (
+                                    <tr key={index}>
+                                        <td className={log.status === "Success" ? "fw-bold" : ""}>{log.user_email}</td>
+                                        <td>
+                                            <Badge bg={
+                                                log.role === "admin" ? "dark" : 
+                                                log.role === "instructor" ? "primary" : 
+                                                log.role === "student" ? "info" : "secondary"
+                                            }>
+                                                {log.role === "admin" ? "Super Admin" : 
+                                                 log.role === "instructor" ? "Instructor" : 
+                                                 log.role === "student" ? "Student" : log.role}
+                                            </Badge>
+                                        </td>
+                                        <td>{log.action}</td>
+                                        <td>
+                                            <Badge bg={log.status === "Success" ? "success" : "danger"} text="light">
+                                                {log.status}
+                                            </Badge>
+                                        </td>
+                                        <td className="text-secondary">{log.time}</td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="5" className="text-center text-secondary">No activity logs yet</td>
+                                </tr>
+                            )}
                         </tbody>
                     </Table>
                 </div>

@@ -20,11 +20,7 @@ SECRET_KEY = "YOUR_SUPER_SECRET_KEY_HERE"  # CHANGE THIS!
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-<<<<<<< HEAD
 pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
-=======
-pwd_context = CryptContext(schemes=["sha256_crypt"], deprecated="auto")
->>>>>>> 54d6d2312537ffaf2fb867d377048567bdb812d0
 
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
@@ -61,8 +57,21 @@ def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
         db.add(new_user)
         db.commit()
         db.refresh(new_user)
+        
+        # Log registration activity
+        activity_log = models.ActivityLog(
+            user_email=user.email,
+            role=user.role,
+            action="Registration",
+            status="Success"
+        )
+        db.add(activity_log)
+        db.commit()
+        
         print(f"User {user.email} registered successfully!")
         return new_user
+    except HTTPException:
+        raise
     except Exception as e:
         print(f"Database error during registration: {str(e)}")
         db.rollback()
@@ -70,7 +79,6 @@ def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
 @router.post("/login", response_model=schemas.Token)
 def login(user_credentials: schemas.UserLogin, db: Session = Depends(get_db)):
-<<<<<<< HEAD
     with open("auth_debug.log", "a") as f:
         f.write(f"\n--- Login Attempt for {user_credentials.email} ---\n")
         
@@ -84,10 +92,17 @@ def login(user_credentials: schemas.UserLogin, db: Session = Depends(get_db)):
         else:
             f.write("User NOT found in database\n")
 
-=======
-    user = db.query(models.User).filter(models.User.email == user_credentials.email).first()
->>>>>>> 54d6d2312537ffaf2fb867d377048567bdb812d0
     if not user or not verify_password(user_credentials.password, user.password_hash):
+        # Log failed login attempt
+        activity_log = models.ActivityLog(
+            user_email=user_credentials.email,
+            role=user.role if user else "unknown",
+            action="System Login",
+            status="Failed"
+        )
+        db.add(activity_log)
+        db.commit()
+        
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email or password",
@@ -107,6 +122,15 @@ def login(user_credentials: schemas.UserLogin, db: Session = Depends(get_db)):
         user.streak = 1
     
     user.last_active_date = today
+    
+    # Log successful login
+    activity_log = models.ActivityLog(
+        user_email=user.email,
+        role=user.role,
+        action="System Login",
+        status="Success"
+    )
+    db.add(activity_log)
     db.commit()
     
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)

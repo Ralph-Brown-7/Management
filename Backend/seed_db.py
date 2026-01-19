@@ -9,7 +9,6 @@ def seed():
     
     # Check if courses exist
     if db.query(models.Course).count() == 0:
-<<<<<<< HEAD
         courses_data = [
             {
                 "title": "Python for Data Science",
@@ -217,34 +216,6 @@ def seed():
         db.add(instructor_user)
         print("Instructor user created: instructor@learnflow.com / instructor123")
 
-=======
-        courses = [
-            models.Course(
-                title="Python for Beginners",
-                description="Learn Python from scratch",
-                image="https://images.unsplash.com/photo-1526379095098-d400fd0bf935?q=80&w=800",
-                instructor="Guido V.",
-                level="Novice"
-            ),
-            models.Course(
-                title="Web Design Fundamentals",
-                description="Master HTML and CSS",
-                image="https://images.unsplash.com/photo-1509395062549-31cd4bf24054?q=80&w=800",
-                instructor="Alice Lee",
-                level="Beginner"
-            ),
-            models.Course(
-                title="Advanced AI & ML",
-                description="Deep dive into neural networks",
-                image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800",
-                instructor="Dr. Smith",
-                level="Advanced"
-            )
-        ]
-        db.add_all(courses)
-        print("Courses seeded")
-        
->>>>>>> 54d6d2312537ffaf2fb867d377048567bdb812d0
     # Create test user
     test_user_email = "test@example.com"
     if not db.query(models.User).filter(models.User.email == test_user_email).first():
@@ -259,7 +230,6 @@ def seed():
         db.add(user)
         print("Test user created: test@example.com / password")
         
-<<<<<<< HEAD
     # TARGET SEEDING: "Darlington Daniel"
     target_name = "Darlington Daniel"
     target_user = db.query(models.User).filter(models.User.full_name == target_name).first()
@@ -385,8 +355,6 @@ def seed():
     else:
         print(f"Could not find or create user {target_name}")
 
-=======
->>>>>>> 54d6d2312537ffaf2fb867d377048567bdb812d0
     db.commit()
     db.close()
 
